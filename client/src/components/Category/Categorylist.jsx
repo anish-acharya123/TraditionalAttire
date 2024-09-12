@@ -40,7 +40,7 @@ const Categorylist = () => {
                 <img
                   alt="items"
                   src={item.image}
-                  className="md:h-[20rem] md:w-[30rem] h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
+                  className="md:h-[30rem] md:w-[30rem] h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
                 />
                 {/* <div className=" md:block hidden absolute inset-0 bg-gray-700 bg-opacity-50 pointer-events-none "></div> */}
               </Link>
