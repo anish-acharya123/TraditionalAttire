@@ -5,9 +5,11 @@ import { CartContext } from "../context/CartContext";
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  // Calculate the total price based on the selected size price
   useEffect(() => {
     const total = cartItems.reduce((acc, item) => {
-      return acc + item.rentPrice * item.quantity; // Total price for each item
+      return acc + item.price * item.quantity; // Use the price stored in the item
     }, 0);
 
     setTotalPrice(total);
@@ -18,7 +20,7 @@ const Cart = () => {
   if (length === 0) {
     return <h2 className="text-center py-20">Your cart is empty</h2>;
   }
-  //   console.log(cartItems)
+
   let Discount = 0;
   if (totalPrice < 1000) {
     Discount = 50;
@@ -31,38 +33,40 @@ const Cart = () => {
   }
 
   return (
-    <section className="flex justify-center  items-center  ">
-      <div className="overflow-hidden relative max-w-[1440px] justify-center items-end px-8 w-full flex flex-col gap-5 sm:py-16 ">
+    <section className="flex justify-center items-center">
+      <div className="overflow-hidden relative max-w-[1440px] justify-center items-end px-8 w-full flex flex-col gap-5 sm:py-16">
         <p className="text-left text-[#ec8d9c] text-[20px] w-full">
           <Link to="/" className="hover:underline hover:text-black underline">
             Home
-          </Link>{" "}/ cart
+          </Link>{" "}
+          / cart
         </p>
-        <h2 className="text-left sm:text-[45px] lg:text-[55px] text-[30px] font-bold md:max-w-[65rem]  text-[#ec8d9c] ">
+        <h2 className="text-left sm:text-[45px] lg:text-[55px] text-[30px] font-bold md:max-w-[65rem] text-[#ec8d9c]">
           Your Cart
         </h2>
         <div className="flex justify-between w-full gap-10">
-          <ul className=" w-full flex flex-col gap-4 p-4 text-  rounded-md">
+          <ul className="w-full flex flex-col gap-4 p-4 rounded-md">
             {cartItems.map((item) => (
               <li
                 key={item._id}
-                className="flex justify-around  bg-[#f6cbd1] p-2 items-center"
+                className="flex justify-around bg-[#f6cbd1] p-2 items-center"
               >
                 <figure>
                   <img
-                    src={item.image}
+                    src={item.images[0]}
                     className="h-20 w-20 rounded-full"
                     alt=""
                   />
                 </figure>
                 <p>{item.type}</p>
-                <p>Price per item: Rs {item.rentPrice}</p>
+                <p>Size: {item.size}</p>
+                <p>Price per item: Rs {item.price}</p>
                 <p>Quantity: {item.quantity}</p>
-                <p>Subtotal: Rs {item.rentPrice * item.quantity}</p>
+                <p>Subtotal: Rs {item.price * item.quantity}</p>
 
                 <button
                   onClick={() => removeFromCart(item._id)}
-                  className="border-none bg-[#ec8d9c]  text-white p-4 rounded-md"
+                  className="border-none bg-[#ec8d9c] text-white p-4 rounded-md"
                 >
                   Remove
                 </button>
@@ -71,7 +75,7 @@ const Cart = () => {
             <div className="flex justify-end px-10">
               <button
                 onClick={clearCart}
-                className=" bg-[#ec8d9c] p-4 rounded-md text-white w-fit "
+                className="bg-[#ec8d9c] p-4 rounded-md text-white w-fit"
               >
                 Clear All
               </button>
@@ -83,24 +87,24 @@ const Cart = () => {
               {cartItems.slice(0, 2).map((item) => (
                 <div key={item._id}>
                   <figure>
-                    <img src={item.image} alt="" className="h-32 w-32" />
+                    <img src={item.images[0]} alt="" className="h-32 w-32" />
                   </figure>
                 </div>
               ))}
             </div>
-            <p className="flex  justify-between ">
-              <span>Item Totel({length})</span>
+            <p className="flex justify-between">
+              <span>Item Total({length})</span>
               <span>Rs: {totalPrice}</span>
             </p>
-            <p className="flex  justify-between ">
+            <p className="flex justify-between">
               <span>Store Pickup</span>
               <span> FREE</span>
             </p>
-            <p className="flex  justify-between ">
+            <p className="flex justify-between">
               <span>Discount</span>
               <span> Rs: {Discount}</span>
             </p>
-            <h3 className="flex  justify-between border-t-2 py-2 ">
+            <h3 className="flex justify-between border-t-2 py-2">
               <span className="font-semibold">Total Price</span>
               <span> Rs: {totalPrice - Discount}</span>
             </h3>

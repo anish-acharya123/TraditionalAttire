@@ -21,21 +21,33 @@ export const CartProvider = ({ children }) => {
     saveCartToLocalStorage(cartItems);
   }, [cartItems]);
 
-  const addToCart = (product) => {
+  const addToCart = (product, size = "S") => {
     setCartItems((prevItems) => {
       console.log(prevItems);
       const itemExists = prevItems.find((item) => item._id === product._id);
+
+      const priceForSize = product.price[size];
+
       if (itemExists) {
         return prevItems.map((item) =>
           item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+                size,
+                price: priceForSize,
+              }
             : item
         );
       } else {
-        return [...prevItems, { ...product, quantity: 1 }];
+        return [
+          ...prevItems,
+          { ...product, quantity: 1, size, price: priceForSize },
+        ];
       }
     });
   };
+
   console.log(cartItems);
 
   const removeFromCart = (id) => {

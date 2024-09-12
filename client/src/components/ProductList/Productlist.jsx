@@ -13,6 +13,7 @@ const Productlist = () => {
   const queryParams = new URLSearchParams(location.search);
   const price = queryParams.get("price");
   const { addToCart } = useContext(CartContext);
+  console.log(categoryName);
   // console.log(price);
   console.log(price);
   useEffect(() => {
@@ -72,7 +73,7 @@ const Productlist = () => {
                   <Link to={`/product/productid/${item._id}`}>
                     <img
                       alt="items"
-                      src={item.image}
+                      src={item.images[0]}
                       className="h-full w-full hover:scale-105 transition-all"
                     />
                   </Link>
@@ -81,7 +82,7 @@ const Productlist = () => {
                   <h2 className="text-[15px] sm:text-[16px] md:text-[18px]  text-center">
                     {item.type}
                   </h2>
-                  <p>Rs: {item.rentPrice}</p>
+                  <p>Rs: {item.price.S}</p>
                 </div>
                 <div className="flex">
                   <Icon

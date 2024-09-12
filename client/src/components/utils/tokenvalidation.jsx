@@ -12,6 +12,7 @@ import axios from "axios";
       return {
         isValid: true,
         role: userResponse.data.role,
+        info : userResponse.data.info
        
       };
     }

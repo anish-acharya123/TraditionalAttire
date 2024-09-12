@@ -15,6 +15,7 @@ import Profile from "./components/Myprofile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminSignin from "./components/SignIn/AdminSignin";
 import AdminSignup from "./components/Signup/AdminSignup";
+import ViewAllcategory from "./components/Category/ViewAllcategory";
 
 function App() {
   return (
@@ -28,14 +29,15 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
+              <Route path="/allcategory" element={<ViewAllcategory />} />
               <Route path="/adminsignin" element={<AdminSignin />} />
               <Route path="/adminsignup" element={<AdminSignup />} />
               <Route
                 path="/profile"
                 element={
-                  // <ProtectedRoute>
-                  <Profile />
-                  // </ProtectedRoute>
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
                 }
               />
               <Route

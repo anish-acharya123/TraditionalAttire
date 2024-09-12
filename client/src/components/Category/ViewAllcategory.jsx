@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchAllProducts } from "../utils/apiProduct"; // Import your API service
 
-const Categorylist = () => {
+const ViewAllcategory = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetchAllProducts();
         const product = res.product;
-        console.log(product)
+        console.log(product);
         const uniqueCategories = product.reduce((acc, item) => {
           if (!acc.some((obj) => obj.category === item.category)) {
             acc.push({ category: item.category, image: item.images[0] });
           }
           return acc;
         }, []);
-        setData(uniqueCategories.slice(0, 6));
-        console.log(uniqueCategories)
+        setData(uniqueCategories);
+        console.log(uniqueCategories);
       } catch (error) {
         console.log("fetch data error", error);
       }
@@ -28,19 +27,30 @@ const Categorylist = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="grid bg-[#ec8d9c] bg-opacity-15 gap-4 grid-cols-2  md:grid-cols-3 justify-evenly py-4 px-2 place-content-center w-full ">
+    <section className="  flex  py-10  w-full justify-center flex-col items-center gap-10">
+      <div className="max-w-[1440px] text-left w-full">
+        <p className="text-left text-[#ec8d9c]">
+          <Link to="/" className="hover:underline hover:text-black">
+            Home
+          </Link>{" "}
+          / Allcategory
+        </p>
+        <h2 className="max-w-[1440px]   w-full text-center  md:text-[44px] text-[40px]  sm:block  font-semibold text-[#ec8d9c] ">
+          All Categories List
+        </h2>
+      </div>
+      <div className="max-w-[1440px]  overflow-hidden flex flex-wrap justify-evenly  items-center gap-4   px-6 ">
         {data.map((item, index) => (
           <div
             key={index}
             className=" p-2 md:p-0 md:relative overflow-hidden rounded-lg bg-white grid gap-4 place-content-center text-[#ec8d9c] shadow-md"
           >
-            <figure className="h-[5rem] k w-full sm:h-[15rem] relative ">
+            <figure className="h-[5rem]  w-full sm:h-[15rem] relative ">
               <Link to={`/product/category/${item.category}`}>
                 <img
                   alt="items"
                   src={item.image}
-                  className="md:h-[20rem] md:w-[30rem] h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
+                  className="md:h-[20rem] md:w-[20rem] h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
                 />
                 {/* <div className=" md:block hidden absolute inset-0 bg-gray-700 bg-opacity-50 pointer-events-none "></div> */}
               </Link>
@@ -51,14 +61,8 @@ const Categorylist = () => {
           </div>
         ))}
       </div>
-      <button
-        onClick={() => navigate('/allcategory')}
-        className="p-4 text-[15px] md:text-[16px] w-fit bg-[#ec8d9c] hover:bg-white hover:text-[#ed7c8d] transition-all border-2 border-[#ec8d9c] text-white"
-      >
-        Check All Categories
-      </button>
-    </div>
+    </section>
   );
 };
 
-export default Categorylist;
+export default ViewAllcategory;

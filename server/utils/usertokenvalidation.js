@@ -12,7 +12,7 @@ const userTokenValidation = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    res.status(200).json({ isValid: true, decoded, role: "user" });
+    res.status(200).json({ isValid: true, info: decoded, role: "user" });
   } catch (error) {
     res.status(401).json({ isValid: false, message: "Invalid token" });
   }

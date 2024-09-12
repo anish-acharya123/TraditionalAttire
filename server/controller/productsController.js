@@ -23,8 +23,16 @@ const AllProducts = async (req, res) => {
           .status(200)
           .json({ product: data, msg: "Products fetched successfully" });
       }
+
       if (price) {
-        const data = await Post.find({ rentPrice: { $lt: Number(price) } });
+        const priceFilter = Number(price);
+        const sizeFields = ["S", "M", "L", "XL"];
+        const orConditions = sizeFields.map((size) => ({
+          [`price.${size}`]: { $lt: priceFilter },
+        }));
+        const data = await Post.find({
+          $or: orConditions,
+        });
         // console.log(data);
         if (data.length === 0) {
           return res

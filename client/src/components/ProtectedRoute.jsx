@@ -13,6 +13,7 @@ const ProtectedRoute = ({ children }) => {
     return <div>Loading...</div>;
   }
 
+  console.log("anish")
   if (!isLoggedIn) {
     return role === "admin" ? (
       <Navigate to="/adminsignin" />

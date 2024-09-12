@@ -36,9 +36,7 @@ const signin = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     const payload = {
-      admin: {
-        email: user.email,
-      },
+      email: user.email,
     };
 
     if (!isMatch) {
@@ -48,14 +46,14 @@ const signin = async (req, res) => {
       expiresIn: "1h",
     });
 
-     console.log("Setting cookie and sending response...");
+    console.log("Setting cookie and sending response...");
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3600000,
       path: "/",
     });
-     console.log("Cookie set successfully, sending 200 response...");
+    console.log("Cookie set successfully, sending 200 response...");
     res.status(200).json({ msg: "Success login", success: true });
   } catch (error) {
     console.log("error", error);
@@ -63,4 +61,32 @@ const signin = async (req, res) => {
   }
 };
 
-module.exports = { signup, signin };
+const getUserbyemail = async (req, res) => {
+  const email = req.params.email;
+  // console.log(req.params.email);
+  if (!email) {
+    return res.status(401).json({ error: "email not found" });
+  }
+  try {
+    const user = await User.findOne({ email }).select("-password");
+    console.log(user);
+    return res.status(201).json({ user: user, msg: "user login successs" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const userLogout = async (req, res) => {
+  try {
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      sameSite: "Strict",
+      secure: true,
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+module.exports = { signup, signin, getUserbyemail, userLogout };

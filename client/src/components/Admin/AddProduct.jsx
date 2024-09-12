@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const AdminAddProductForm = () => {
+  const navigate = useNavigate();
   const { info } = useAuth();
   const [formData, setFormData] = useState({
     category: "",
@@ -111,6 +114,16 @@ const AdminAddProductForm = () => {
       alert("Error occurred while adding the product.");
     }
   };
+
+  // admin logout
+  const logout = async () => {
+    const res = await axios.get("http://localhost:2000/admin/logout", {
+      withCredentials: true,
+    });
+    toast.success(res.data.message);
+    navigate(0);
+  };
+
   return (
     <div className="max-w-2xl mx-auto py-20  rounded-lg flex flex-col justify-center items-center">
       <div className="min-w-[1440px] w-full justify-center items-center flex flex-col px-6">
@@ -137,7 +150,7 @@ const AdminAddProductForm = () => {
             {/* Gender Input */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                GenderF
+                Gender
               </label>
               <input
                 type="text"
@@ -187,9 +200,13 @@ const AdminAddProductForm = () => {
                 <div key={index} className="flex space-x-2 mb-2">
                   <input
                     type="text"
-                    value={input.size}
+                    value={input.size.toUpperCase()}
                     onChange={(e) =>
-                      handlePriceChange(index, "size", e.target.value)
+                      handlePriceChange(
+                        index,
+                        "size",
+                        e.target.value.toUpperCase()
+                      )
                     }
                     placeholder="Size (e.g., S, M, L)"
                     className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
@@ -224,9 +241,13 @@ const AdminAddProductForm = () => {
                 <div key={index} className="flex space-x-2 mb-2">
                   <input
                     type="text"
-                    value={input.size}
+                    value={input.size.toUpperCase()}
                     onChange={(e) =>
-                      handleAvailableCountChange(index, "size", e.target.value)
+                      handleAvailableCountChange(
+                        index,
+                        "size",
+                        e.target.value.toUpperCase()
+                      )
                     }
                     placeholder="Size"
                     className="mt-1 block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm"
@@ -295,6 +316,13 @@ const AdminAddProductForm = () => {
             </div>
           </div>
         </form>
+
+        <button
+          onClick={logout}
+          className="border-none bg-red-500 text-white py-2 px-4 rounded-md"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -147,4 +147,18 @@ const adminproductadd = async (req, res) => {
     res.status(500).json({ message: "Failed to add product" });
   }
 };
-module.exports = { adminSignup, adminSignin, adminproductadd };
+
+const adminlogout = async (req, res) => {
+  try {
+    res.cookie("admintoken", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      sameSite: "Strict",
+      secure: true,
+    });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+module.exports = { adminSignup, adminSignin, adminproductadd, adminlogout };

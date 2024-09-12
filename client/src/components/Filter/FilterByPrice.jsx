@@ -28,17 +28,17 @@ const FilterByPrice = () => {
           >
             {toogle && (
               <div className="flex flex-col bg-[#db7c8a] p-4 ">
-                <Link to={`/product/category/?price=${"1000"}`}>
-                  Less than 1000
+                <Link to={`/product/category/?price=${"200"}`}>
+                  Less than 200
                 </Link>
-                <Link to={`/product/category/?price=${"2000"}`}>
-                  Less than 2000
+                <Link to={`/product/category/?price=${"500"}`}>
+                  Less than 500
                 </Link>
-                <Link to={`/product/category/?price=${"3000"}`}>
-                  Less than 3000
+                <Link to={`/product/category/?price=${"600"}`}>
+                  Less than 600
                 </Link>
-                <Link to={`/product/category/?price=${"4000"}`}>
-                  Less than 4000
+                <Link to={`/product/category/?price=${"700"}`}>
+                  Less than 700
                 </Link>
                 <Link to={`/product/category`}>Others</Link>
               </div>
