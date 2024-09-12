@@ -65,10 +65,19 @@ const AdminAddProductForm = () => {
     setAvailableCountInputs([...availableCountInputs, { size: "", count: "" }]);
   };
 
-  const handleImageChange = (index, value) => {
+  const [file, setFile] = useState();
+
+  const handleImageChange = async (index, e) => {
     const newImageInputs = [...imageInputs];
-    newImageInputs[index] = value;
+    const file = e.target.files[0];
+    setFile(file);
+
+    const imageResponse = await ImageHandler(file);
+
+    newImageInputs[index] = imageResponse;
     setImageInputs(newImageInputs);
+    console.log(imageInputs);
+
     setFormData({ ...formData, images: newImageInputs });
   };
 
@@ -76,7 +85,6 @@ const AdminAddProductForm = () => {
     setImageInputs([...imageInputs, ""]);
   };
 
-  console.log(imageInputs);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -129,7 +137,7 @@ const AdminAddProductForm = () => {
             {/* Gender Input */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700">
-                Gender
+                GenderF
               </label>
               <input
                 type="text"
@@ -252,9 +260,9 @@ const AdminAddProductForm = () => {
                 <input
                   key={index}
                   type="file"
-                  value={input}
-                  onChange={(e) => handleImageChange(index, e.target.value)}
-                  placeholder="Image URL"
+                  accept="image/*"
+                  // value={file}
+                  onChange={(e) => handleImageChange(index, e)}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm mb-2"
                 />
               ))}
@@ -290,6 +298,29 @@ const AdminAddProductForm = () => {
       </div>
     </div>
   );
+};
+
+const ImageHandler = async (file) => {
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("upload_preset", "TradtionalAttire");
+
+  const imageUploadString =
+    "https://api.cloudinary.com/v1_1/ds23ganvj/image/upload";
+
+  try {
+    const response = await fetch(imageUploadString, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    return data.secure_url;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default AdminAddProductForm;

@@ -119,7 +119,7 @@ const adminproductadd = async (req, res) => {
     name,
     phone,
     storeLocation,
-    email
+    email,
   } = req.body;
 
   try {
@@ -131,47 +131,17 @@ const adminproductadd = async (req, res) => {
       description,
       size,
       availableCount,
-      images: [],
+      images,
       name,
       phone,
       storeLocation,
       email,
     });
 
+    // Save product to the database
+    await newProduct.save();
 
-     const uploadToCloudinary = (image) => {
-       return new Promise((resolve, reject) => {
-         const uploadStream = cloudinary.uploader.upload_stream(
-           {
-             folder: "newproducts_photos",
-             use_filename: true,
-             unique_filename: false,
-           },
-           (error, result) => {
-             if (error) {
-               reject(error);
-             } else {
-               resolve(result.secure_url); // Return the secure URL
-             }
-           }
-         );
-         uploadStream.end(image.buffer); // Send the image buffer to the stream
-       });
-     };
-
-     // If images exist, upload each image and store the URLs
-     if (images && images.length > 0) {
-       const imageUploadPromises = images.map((image) =>
-         uploadToCloudinary(image)
-       );
-       const imageUrls = await Promise.all(imageUploadPromises);
-       newProduct.images = imageUrls; // Store the Cloudinary URLs in the product
-     }
-
-     // Save product to the database
-     await newProduct.save();
-
-     res.status(201).json({ message: "Product added successfully" });
+    res.status(201).json({ message: "Product added successfully" });
   } catch (error) {
     console.error("Error adding product:", error);
     res.status(500).json({ message: "Failed to add product" });

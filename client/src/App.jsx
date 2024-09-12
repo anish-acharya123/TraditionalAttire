@@ -9,7 +9,7 @@ import Productlist from "./components/ProductList/Productlist";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
 import Cart from "./components/Cart/Cart";
 // import Signup from "./components/Signup/Signup";
-import SignUp from "./components/Signup/Signup";
+import SignUp from "./components/Signup/SignUp";
 import SignIn from "./components/SignIn/SignIn";
 import Profile from "./components/Myprofile/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -33,9 +33,9 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
+                  // <ProtectedRoute>
+                  <Profile />
+                  // </ProtectedRoute>
                 }
               />
               <Route
