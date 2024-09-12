@@ -112,4 +112,38 @@ const likeproduct = async (req, res) => {
   }
 };
 
-module.exports = { signup, signin, getUserbyemail, userLogout, likeproduct };
+const wishproduct = async (req, res) => {
+  const email = req.params.email;
+  if (!email) {
+    return res.status(401).json({ error: "email not found" });
+  }
+
+  try {
+    const userLikedItems = await User.findOne(
+      { email },
+      { likedItems: 1, _id: 0 }
+    );
+    console.log(userLikedItems);
+    let likedProducts = [];
+    if (userLikedItems && userLikedItems.likedItems.length > 0) {
+      likedProducts = await Product.find({
+        _id: { $in: user.likedItems },
+      });
+    }
+    console.log(likedProducts);
+    res
+      .status(201)
+      .json({ item: likedProducts, msg: "success retrive", success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = {
+  signup,
+  signin,
+  getUserbyemail,
+  userLogout,
+  likeproduct,
+  wishproduct,
+};
