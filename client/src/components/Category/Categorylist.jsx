@@ -6,6 +6,7 @@ const Categorylist = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate()
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {

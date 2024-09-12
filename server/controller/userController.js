@@ -89,4 +89,27 @@ const userLogout = async (req, res) => {
     console.log("Error", error);
   }
 };
-module.exports = { signup, signin, getUserbyemail, userLogout };
+
+const likeproduct = async (req, res) => {
+  const id = req.params.id;
+  const email = req.params.email;
+  console.log(id, email);
+
+  if (!id) {
+    return res.status(401).json({ error: "id not found" });
+  }
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      {
+        $addToSet: { likedItems: id },
+      },
+      { new: true }
+    );
+    res.status(200).json({ msg: "success", sucess: true });
+  } catch (error) {
+    res.status(500).json({ error: "internal server error" });
+  }
+};
+
+module.exports = { signup, signin, getUserbyemail, userLogout, likeproduct };

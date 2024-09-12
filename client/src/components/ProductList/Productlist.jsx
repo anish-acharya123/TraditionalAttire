@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { fetchAllProducts } from "../utils/apiProduct";
+import axios from "axios";
 import { Icon } from "@iconify/react";
 import Filter from "../Filter/Filter";
 import { CartContext } from "../context/CartContext";
+import { useAuth } from "../context/UserAuthContext";
 
 const Productlist = () => {
+  const { info } = useAuth();
   const [error, setError] = useState();
   const [data, setData] = useState([]);
   const { categoryName } = useParams();
@@ -13,9 +16,16 @@ const Productlist = () => {
   const queryParams = new URLSearchParams(location.search);
   const price = queryParams.get("price");
   const { addToCart } = useContext(CartContext);
-  console.log(categoryName);
+  // console.log(categoryName);
   // console.log(price);
-  console.log(price);
+  // console.log(price);
+
+  const LikeItem = async (id) => {
+    await axios.post(
+      `http://localhost:2000/user/likeproduct/${id}/${info.email}`
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,7 +92,7 @@ const Productlist = () => {
                   <h2 className="text-[15px] sm:text-[16px] md:text-[18px]  text-center">
                     {item.type}
                   </h2>
-                  <p>Rs: {item.price.S}</p>
+                  <p>Rs: {item.price.S || item.price.M || item.price.L}</p>
                 </div>
                 <div className="flex">
                   <Icon
@@ -113,7 +123,10 @@ const Productlist = () => {
                   >
                     Add To cart
                   </button>
-                  <button className="border-2 px-2 py-2 rounded text-[14px]">
+                  <button
+                    onClick={LikeItem(item._id)}
+                    className="border-2 px-2 py-2 rounded text-[14px]"
+                  >
                     WishList
                   </button>
                 </div>
