@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Post = require("../models/Post");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -46,14 +47,13 @@ const signin = async (req, res) => {
       expiresIn: "1h",
     });
 
-    console.log("Setting cookie and sending response...");
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 3600000,
       path: "/",
     });
-    console.log("Cookie set successfully, sending 200 response...");
+
     res.status(200).json({ msg: "Success login", success: true });
   } catch (error) {
     console.log("error", error);
@@ -63,7 +63,7 @@ const signin = async (req, res) => {
 
 const getUserbyemail = async (req, res) => {
   const email = req.params.email;
-  // console.log(req.params.email);
+
   if (!email) {
     return res.status(401).json({ error: "email not found" });
   }
@@ -93,7 +93,6 @@ const userLogout = async (req, res) => {
 const likeproduct = async (req, res) => {
   const id = req.params.id;
   const email = req.params.email;
-  console.log(id, email);
 
   if (!id) {
     return res.status(401).json({ error: "id not found" });
@@ -123,19 +122,71 @@ const wishproduct = async (req, res) => {
       { email },
       { likedItems: 1, _id: 0 }
     );
-    console.log(userLikedItems);
-    let likedProducts = [];
+
     if (userLikedItems && userLikedItems.likedItems.length > 0) {
-      likedProducts = await Product.find({
-        _id: { $in: user.likedItems },
+      const likedProducts = await Post.find({
+        _id: { $in: userLikedItems.likedItems },
       });
+
+      return res
+        .status(200)
+        .json({ items: likedProducts, msg: "success retrive" });
     }
-    console.log(likedProducts);
-    res
-      .status(201)
-      .json({ item: likedProducts, msg: "success retrive", success: true });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+const deletewishhlist = async (req, res) => {
+  const id = req.params.id;
+  const email = req.params.email;
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $pull: { likedItems: id } },
+      { new: true }
+    );
+    if (user) {
+      res.status(200).json({ message: "Item removed from wishlist" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error in deletewishlist:", error);
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+const viewedproducts = async (req, res) => {
+  const { id, email } = req.body;
+
+  if (!id || !email) {
+    return res.status(402).json({ error: "id and email not found" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    let viewedItems = user.viewedItems || [];
+
+    if (!viewedItems.includes(id)) {
+      if (viewedItems.length === 10) {
+        viewedItems.shift();
+      }
+
+      viewedItems.push(id);
+    }
+
+    user.viewedItems = viewedItems;
+    await user.save();
+
+    res.status(200).json({ msg: "success", success: true, viewedItems });
+  } catch (error) {
+    res.status(500).json({ error: "internal server error" });
   }
 };
 
@@ -146,4 +197,6 @@ module.exports = {
   userLogout,
   likeproduct,
   wishproduct,
+  deletewishhlist,
+  viewedproducts,
 };

@@ -9,7 +9,7 @@ const ProductImageZoom = ({ image }) => {
         <img
           src={image}
           alt="Product"
-          style={{ width: "300px", height: "auto" }} // Set the initial image size
+          className="h-full w-full"// Set the initial image size
         />
       </Zoom>
     </div>

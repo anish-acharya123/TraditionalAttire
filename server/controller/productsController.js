@@ -54,7 +54,7 @@ const getProductById = async (req, res) => {
   try {
     const id = req.params.id;
     // console.log(id);
-    console.log("anish");
+    // console.log("anish");
     const product = await Post.findOne({ _id: id });
     // console.log(product);
     if (!product) {

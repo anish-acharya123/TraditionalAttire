@@ -17,42 +17,53 @@ import AdminSignin from "./components/SignIn/AdminSignin";
 import AdminSignup from "./components/Signup/AdminSignup";
 import ViewAllcategory from "./components/Category/ViewAllcategory";
 import Wishlist from "./components/Wishlist/Wishlist";
+import { WishlistProvider } from "./components/context/WishlistContext";
+import Recommendations from "./components/Youmaylike/Recommendations";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <BrowserRouter>
-          <CartProvider>
-            <Navbar />
-            <Routes>
-              <Route path="/" element={<Landingpage />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/wishlist" element={<Wishlist />} />
-              <Route path="/allcategory" element={<ViewAllcategory />} />
-              <Route path="/adminsignin" element={<AdminSignin />} />
-              <Route path="/adminsignup" element={<AdminSignup />} />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/product/productid/:id"
-                element={<ProductDetails />}
-              />
-              <Route
-                path="/product/category/:categoryName?"
-                element={<Productlist />}
-              />
-            </Routes>
-          </CartProvider>
-        </BrowserRouter>
+        <WishlistProvider>
+          <BrowserRouter>
+            <CartProvider>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Landingpage />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route
+                  path="/wishlist"
+                  element={
+                    <ProtectedRoute>
+                      <Wishlist />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/allcategory" element={<ViewAllcategory />} />
+                <Route path="/adminsignin" element={<AdminSignin />} />
+                <Route path="/adminsignup" element={<AdminSignup />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/product/productid/:id"
+                  element={<ProductDetails />}
+                />
+                <Route
+                  path="/product/category/:categoryName?"
+                  element={<Productlist />}
+                />
+              </Routes>
+            </CartProvider>
+          </BrowserRouter>
+        </WishlistProvider>
       </AuthProvider>
     </>
   );

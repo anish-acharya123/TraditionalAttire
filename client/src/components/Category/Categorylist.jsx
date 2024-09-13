@@ -12,7 +12,7 @@ const Categorylist = () => {
       try {
         const res = await fetchAllProducts();
         const product = res.product;
-        console.log(product)
+        // console.log(product)
         const uniqueCategories = product.reduce((acc, item) => {
           if (!acc.some((obj) => obj.category === item.category)) {
             acc.push({ category: item.category, image: item.images[0] });
@@ -20,7 +20,7 @@ const Categorylist = () => {
           return acc;
         }, []);
         setData(uniqueCategories.slice(0, 6));
-        console.log(uniqueCategories)
+        // console.log(uniqueCategories)
       } catch (error) {
         console.log("fetch data error", error);
       }
@@ -41,7 +41,7 @@ const Categorylist = () => {
                 <img
                   alt="items"
                   src={item.image}
-                  className="md:h-[30rem] md:w-[30rem] h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
+                  className="md:h-[15rem] md:w-[15rem] p-4   h-full z-30 cursor-pointer w-full object- hover:scale-105 transition-all"
                 />
                 {/* <div className=" md:block hidden absolute inset-0 bg-gray-700 bg-opacity-50 pointer-events-none "></div> */}
               </Link>

@@ -106,7 +106,7 @@ const adminSignin = async (req, res) => {
 };
 
 const adminproductadd = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const {
     category,
     price,

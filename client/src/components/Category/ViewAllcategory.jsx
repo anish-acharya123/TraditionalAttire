@@ -43,7 +43,7 @@ const ViewAllcategory = () => {
         {data.map((item, index) => (
           <div
             key={index}
-            className=" p-2 md:p-0 md:relative overflow-hidden rounded-lg bg-white grid gap-4 place-content-center text-[#ec8d9c] shadow-md"
+            className=" p-2 relative md:p-0 md:relative overflow-hidden rounded-lg bg-white grid gap-4 place-content-center text-[#ec8d9c] shadow-md"
           >
             <figure className="h-[5rem]  w-full sm:h-[15rem] relative ">
               <Link to={`/product/category/${item.category}`}>
@@ -55,7 +55,7 @@ const ViewAllcategory = () => {
                 {/* <div className=" md:block hidden absolute inset-0 bg-gray-700 bg-opacity-50 pointer-events-none "></div> */}
               </Link>
             </figure>
-            <h2 className=" md:text-black bg-white p-2 border-2 rounded-full md:absolute top-0 text-[15px] sm:text-[16px] md:text-[18px] font-bold md:font-normal translate-x-[50%] translate-y-[50%] text-center">
+            <h2 className="absolute  md:text-black bg-white p-2 border-2 rounded-full md:absolute top-0 text-[15px] sm:text-[16px] md:text-[18px] font-bold md:font-normal translate-x-[10%] translate-y-[10%] text-center">
               {item.category}
             </h2>
           </div>

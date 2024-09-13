@@ -14,10 +14,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthentication = async () => {
       setIsCheckingAuth(true);
-      console.log("ff");
+
       try {
         const { isValid, role, info } = await validateToken();
-        console.log(isValid, role, info);
+        // console.log(isValid, role, info);
         setInfo(info);
         setIsLoggedIn(isValid);
         setRole(role);
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, role, isCheckingAuth,info, setIsLoggedIn }}
+      value={{ isLoggedIn, role, isCheckingAuth, info, setIsLoggedIn }}
     >
       {children}
     </AuthContext.Provider>

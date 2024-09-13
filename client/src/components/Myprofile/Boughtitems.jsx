@@ -2,7 +2,7 @@ import React from 'react'
 
 const Boughtitems = () => {
   return (
-    <div>Boughtitems</div>
+    <div>No Bought items currently</div>
   )
 }
 

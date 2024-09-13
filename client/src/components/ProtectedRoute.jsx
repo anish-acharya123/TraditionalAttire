@@ -5,15 +5,15 @@ import { useAuth } from "../components/context/UserAuthContext";
 const ProtectedRoute = ({ children }) => {
   const { isLoggedIn, isCheckingAuth, role } = useAuth();
 
-  console.log("isLoggedIn:", isLoggedIn);
-  console.log("isCheckingAuth:", isCheckingAuth);
-  console.log("User role:", role);
+  // console.log("isLoggedIn:", isLoggedIn);
+  // console.log("isCheckingAuth:", isCheckingAuth);
+  // // console.log("User role:", role);
 
   if (isCheckingAuth) {
     return <div>Loading...</div>;
   }
 
-  console.log("anish")
+  // console.log("anish")
   if (!isLoggedIn) {
     return role === "admin" ? (
       <Navigate to="/adminsignin" />

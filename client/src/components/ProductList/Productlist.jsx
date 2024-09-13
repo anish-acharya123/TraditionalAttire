@@ -124,7 +124,7 @@ const Productlist = () => {
                     Add To cart
                   </button>
                   <button
-                    onClick={LikeItem(item._id)}
+                    onClick={() => LikeItem(item._id)}
                     className="border-2 px-2 py-2 rounded text-[14px]"
                   >
                     WishList

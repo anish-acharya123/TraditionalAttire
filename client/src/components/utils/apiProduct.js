@@ -7,7 +7,7 @@ export const fetchAllProducts = async (
   categoryName = "allproducts",
   price = "0"
 ) => {
-  console.log(categoryName);
+  // console.log(categoryName);
   try {
     let query = "";
 
@@ -21,7 +21,7 @@ export const fetchAllProducts = async (
       query += `${query ? "&" : ""}price=${price}`; // Append with "&" if categoryName is present
     }
 
-    console.log("Query string:", query);
+    // console.log("Query string:", query);
 
     const response = await axios.get(`${BASE_URL}/products?${query}`);
     return response.data;
