@@ -4,8 +4,7 @@ import { fetchAllProducts } from "../utils/apiProduct"; // Import your API servi
 
 const Categorylist = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,7 +52,7 @@ const Categorylist = () => {
         ))}
       </div>
       <button
-        onClick={() => navigate('/allcategory')}
+        onClick={() => navigate("/allcategory")}
         className="p-4 text-[15px] md:text-[16px] w-fit bg-[#ec8d9c] hover:bg-white hover:text-[#ed7c8d] transition-all border-2 border-[#ec8d9c] text-white"
       >
         Check All Categories

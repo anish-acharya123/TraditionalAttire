@@ -19,6 +19,7 @@ import ViewAllcategory from "./components/Category/ViewAllcategory";
 import Wishlist from "./components/Wishlist/Wishlist";
 import { WishlistProvider } from "./components/context/WishlistContext";
 import Recommendations from "./components/Youmaylike/Recommendations";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                   element={<Productlist />}
                 />
               </Routes>
+              <Footer />
             </CartProvider>
           </BrowserRouter>
         </WishlistProvider>

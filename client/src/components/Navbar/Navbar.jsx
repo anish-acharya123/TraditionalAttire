@@ -5,8 +5,10 @@ import { Icon } from "@iconify/react";
 import { CartContext } from "../context/CartContext";
 import { WishlistContext } from "../context/WishlistContext";
 import Searchbar from "../Searchbar/Searchbar";
+import { useAuth } from "../context/UserAuthContext";
 
 const Navbar = () => {
+  const { role } = useAuth();
   const { cartItems } = useContext(CartContext);
   const { wishlist } = useContext(WishlistContext);
   const [itemNumber, setItemNumber] = useState(0);
@@ -27,34 +29,47 @@ const Navbar = () => {
             />
           </Link>
         </figure>
-        <div>
-          <Searchbar />
-        </div>
+
+        {(role === "user" || role === null) && (
+          <div>
+            <Searchbar />
+          </div>
+        )}
         <div className="flex gap-4">
           <Link to="/profile">
             <Icon icon="gg:profile" className="text-white h-10 w-10" />
           </Link>
-          <Link to="/wishlist" className="relative">
-            <Icon icon="mingcute:love-line" className="text-white h-10 w-10" />
-            <p
-              className={`${
-                wishlist.length === 0 ? "hidden" : "block"
-              } absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-[#46282d] text-[10px] bg-white rounded-full px-2 py-1`}
-            >
-              {wishlist.length}
-            </p>
-          </Link>
+          {(role === "user" || role === null) && (
+            <div className="flex gap-2">
+              <Link to="/wishlist" className="relative">
+                <Icon
+                  icon="mingcute:love-line"
+                  className="text-white h-10 w-10"
+                />
+                <p
+                  className={`${
+                    wishlist.length === 0 ? "hidden" : "block"
+                  } absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-[#46282d] text-[10px] bg-white rounded-full px-2 py-1`}
+                >
+                  {wishlist.length}
+                </p>
+              </Link>
 
-          <Link to="/cart" className="relative">
-            <Icon icon="mdi:cart" className="relative text-white h-10 w-10" />
-            <p
-              className={`${
-                itemNumber === 0 ? "hidden" : "block"
-              } absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-[#46282d] text-[10px] bg-white rounded-full px-2 py-1`}
-            >
-              {itemNumber}
-            </p>
-          </Link>
+              <Link to="/cart" className="relative">
+                <Icon
+                  icon="mdi:cart"
+                  className="relative text-white h-10 w-10"
+                />
+                <p
+                  className={`${
+                    itemNumber === 0 ? "hidden" : "block"
+                  } absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 text-[#46282d] text-[10px] bg-white rounded-full px-2 py-1`}
+                >
+                  {itemNumber}
+                </p>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -20,6 +20,6 @@ router.delete("/wishlist/:email/:id", deletewishhlist);
 router.get("/usertoken-validate", userTokenValidation);
 router.get("/getuser/:email", getUserbyemail);
 router.get("/logout", userLogout);
-router.post("/vieweditems", viewedproducts)
+router.post("/vieweditems", viewedproducts);
 
 module.exports = router;

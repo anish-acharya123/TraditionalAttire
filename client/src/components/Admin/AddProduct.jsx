@@ -116,13 +116,6 @@ const AdminAddProductForm = () => {
   };
 
   // admin logout
-  const logout = async () => {
-    const res = await axios.get("http://localhost:2000/admin/logout", {
-      withCredentials: true,
-    });
-    toast.success(res.data.message);
-    navigate(0);
-  };
 
   return (
     <div className="max-w-2xl mx-auto py-20  rounded-lg flex flex-col justify-center items-center">
@@ -317,12 +310,7 @@ const AdminAddProductForm = () => {
           </div>
         </form>
 
-        <button
-          onClick={logout}
-          className="border-none bg-red-500 text-white py-2 px-4 rounded-md"
-        >
-          Logout
-        </button>
+        
       </div>
     </div>
   );

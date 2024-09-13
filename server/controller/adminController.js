@@ -152,13 +152,36 @@ const adminlogout = async (req, res) => {
   try {
     res.cookie("admintoken", "", {
       httpOnly: true,
-      expires: new Date(0),
+      expires: new Date(0), 
       sameSite: "Strict",
-      secure: true,
+      secure: process.env.NODE_ENV === "production", 
     });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error during logout", error);
+    res.status(500).json({ message: "Logout failed" });
   }
 };
-module.exports = { adminSignup, adminSignin, adminproductadd, adminlogout };
+
+
+const allproducts = async (req, res) => {
+  const email = req.params.email;
+  if (!email) {
+    return res.status(401).json({ error: "email not found" });
+  }
+  try {
+      const Product = await Post.find({ email });
+      console.log(Product);
+      res.status(200).json({ msg: "Product found" , product: Product});
+  } catch (error) {
+    res.status(500).json({error:"Internal server error"})
+  }
+
+};
+module.exports = {
+  adminSignup,
+  allproducts,
+  adminSignin,
+  adminproductadd,
+  adminlogout,
+};

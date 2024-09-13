@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { CartContext } from "../context/CartContext";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useAuth } from "../context/UserAuthContext";
 
 const Recommendations = () => {
+    const { info } = useAuth();
   const [recommendations, setRecommendations] = useState([]);
+  const [latestProducts, setLatestProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     axios
@@ -22,12 +27,38 @@ const Recommendations = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (recommendations.length === 0) {
+      axios
+        .get("http://localhost:2000/product/latest-products")
+        .then((response) => {
+          setLatestProducts(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching latest products:", error);
+        });
+    }
+  }, [recommendations]);
+
+  const displayItems =
+    recommendations.length > 0 ? recommendations : latestProducts;
+
+  const LikeItem = async (id) => {
+    await axios.post(
+      `http://localhost:2000/user/likeproduct/${id}/${info.email}`
+    );
+  };
+  
   return (
     <section className="flex justify-center items-center">
       <div className="overflow-hidden relative max-w-[1440px] px-8 w-full flex flex-col gap-12 sm:py-24 flex-1">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between md:gap-4 gap-2">
           <h1 className="text-[20px] md:text-[32px] font-bold min-w-fit text-[#ec8d9c]">
-            YOU MAY LIKE THIS
+            {recommendations.length > 0 ? (
+              <span>You May Like This</span>
+            ) : (
+              <span>Latest Products</span>
+            )}
           </h1>
           <div className="h-1 bg-gray-300 w-full" />
         </div>
@@ -56,7 +87,7 @@ const Recommendations = () => {
                     </div>
                   </div>
                 ))
-            : recommendations.slice(0, 5).map((item) => (
+            : displayItems.slice(0,5).map((item) => (
                 <div
                   key={item._id}
                   className="p-2 leading-[130%] mb-8 text-center rounded-lg bg-white grid gap-2 place-content-center place-items-center shadow-md"

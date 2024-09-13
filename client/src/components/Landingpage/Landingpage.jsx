@@ -2,15 +2,24 @@ import React from "react";
 import Home from "../Home/Home";
 import Category from "../Category/Category";
 import Recommendations from "../Youmaylike/Recommendations";
-import Recommend from "../Youmaylike/Recommend";
+import { useAuth } from "../context/UserAuthContext";
+import AdminHome from "../Admin/AdminHome";
 
 const Landingpage = () => {
+  const { role } = useAuth();
+  console.log(role);
+
   return (
     <div>
-      <Home />
-      {/* <Recommend /> */}
-      <Category />
-      <Recommendations />
+      {role === "admin" ? (
+        <AdminHome />
+      ) : (
+        <div>
+          <Home />
+          <Category />
+          <Recommendations />
+        </div>
+      )}
     </div>
   );
 };

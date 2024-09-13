@@ -190,6 +190,8 @@ const viewedproducts = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   signup,
   signin,
@@ -199,4 +201,5 @@ module.exports = {
   wishproduct,
   deletewishhlist,
   viewedproducts,
+
 };

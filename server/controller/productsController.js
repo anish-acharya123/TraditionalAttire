@@ -66,4 +66,39 @@ const getProductById = async (req, res) => {
   }
 };
 
-module.exports = { AllProducts, getProductById };
+const deleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    if (!id) {
+      return res.status(400).json({ error: "Product ID not provided" });
+    }
+
+    const deletedProduct = await Post.findOneAndDelete({ _id: id });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Product deleted successfully", deletedProduct });
+  } catch (error) {
+    return res.status(500).json({
+      error: "An error occurred while deleting the product",
+      details: error.message,
+    });
+  }
+};
+
+const latestProduct = async (req, res) => {
+  try {
+    const latestProducts = await Post.find().sort({ createdAt: -1 }).limit(5);
+    res.status(200).json(latestProducts);
+  } catch (error) {
+    console.error("Error fetching latest products:", error);
+    res.status(500).json({ message: "Failed to fetch latest products" });
+  }
+};
+
+module.exports = { AllProducts, getProductById, deleteProduct, latestProduct };

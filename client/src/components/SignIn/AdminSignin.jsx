@@ -63,7 +63,7 @@ const AdminSignin = () => {
           ← Back
         </button>
         <h1 className="text-center md:text-[52px] text-[40px]  sm:block  font-semibold text-[#ec8d9c]">
-          ADMIN SIGN-IN
+          SELLER SIGN-IN
         </h1>
         <div className="md:flex-row border-2 p-4 flex flex-col items-center gap-8 shadow-md  mt-4 sm:mt-0">
           <figure className="">

@@ -2,6 +2,7 @@ import React from "react";
 import AdminAddProductForm from "../Admin/AddProduct";
 import { useAuth } from "../context/UserAuthContext";
 import UserP from "./UserP";
+import AdminDashboard from "../Admin/AdminDashboard";
 
 // import { useAuth } from "../context/AuthContext";
 
@@ -10,8 +11,8 @@ const Profile = () => {
   console.log(role);
   return (
     <div>
-      {role == "admin" && <AdminAddProductForm />}
-      {role == "user" && <UserP/>}
+      {role == "admin" && <AdminDashboard />}
+      {role == "user" && <UserP />}
     </div>
   );
 };

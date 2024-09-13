@@ -42,8 +42,6 @@ const UserP = () => {
     }
   }, [info]);
 
-
-
   return (
     <section className=" flex justify-center  items-center  ">
       <div className="overflow-hidden relative max-w-[1440px] justify-center px-8 w-full flex flex-col md:flex-col gap-12 sm:py-10 ">

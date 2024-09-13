@@ -119,7 +119,7 @@ const SignIn = () => {
             <p>
               Sign in as Admin{" "}
               <Link to="/adminsignin" className="text-[#ec8d9c] underline">
-                Admin
+                Seller
               </Link>
             </p>
           </form>
