@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserAuthContext";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const AdminAddProductForm = () => {
   const navigate = useNavigate();
@@ -309,8 +308,6 @@ const AdminAddProductForm = () => {
             </div>
           </div>
         </form>
-
-        
       </div>
     </div>
   );

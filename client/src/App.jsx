@@ -20,6 +20,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import { WishlistProvider } from "./components/context/WishlistContext";
 import Recommendations from "./components/Youmaylike/Recommendations";
 import Footer from "./components/Footer/Footer";
+import CheckoutPage from "./components/Cart/Checkout";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                   path="/product/category/:categoryName?"
                   element={<Productlist />}
                 />
+                <Route path="/checkout" element={<CheckoutPage />} />
               </Routes>
               <Footer />
             </CartProvider>

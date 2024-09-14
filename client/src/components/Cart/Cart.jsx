@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
@@ -108,9 +108,11 @@ const Cart = () => {
               <span className="font-semibold">Total Price</span>
               <span> Rs: {totalPrice - Discount}</span>
             </h3>
-            <button className="py-2 px-4 bg-yellow-300 text-black rounded-md">
-              Check Out
-            </button>
+            <NavLink to="/checkout">
+              <button className="py-2 px-4 bg-yellow-300 text-black rounded-md">
+                Check Out
+              </button>
+            </NavLink>
             <p className="text-left text-[14px] max-w-[15rem]">
               Found these items at a cheaper price elsewhere? We price match.
             </p>
