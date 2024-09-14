@@ -41,6 +41,8 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  // total_price:
+  //
 });
 
 const User = mongoose.model("User", userSchema);
