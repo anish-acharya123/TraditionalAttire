@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import image from "../../assets/DaWear.png";
+import image from "../../assets/welcome.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Home = () => {
         </div>
         <div className="lg:block hidden border-2 rounded-full shadow-lg overflow-hidden ">
           <figure className="translate-y-4">
-            <img src={image} alt="" />
+            <img  className= "w-[370px] h-[370px]" src={image} alt="" />
           </figure>
         </div>
       </div>
