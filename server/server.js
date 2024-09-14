@@ -36,13 +36,15 @@ app.post("/payment/khalti", async (req, res) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Key 25268e75e7f84d41afa6f02217261ad4`,
+          Authorization: `Key a28520131c564eb1a3d1d1b2af09a1b1`,
         },
         body: JSON.stringify(payload),
       }
     );
 
     const result = await khaltiResponse.json();
+
+    console.log(result);
 
     if (khaltiResponse.ok) {
       res.json({

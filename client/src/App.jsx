@@ -21,6 +21,7 @@ import { WishlistProvider } from "./components/context/WishlistContext";
 import Recommendations from "./components/Youmaylike/Recommendations";
 import Footer from "./components/Footer/Footer";
 import CheckoutPage from "./components/Cart/Checkout";
+import SuccessPage from "./components/success";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/allcategory" element={<ViewAllcategory />} />
                 <Route path="/adminsignin" element={<AdminSignin />} />
                 <Route path="/adminsignup" element={<AdminSignup />} />
+                <Route path="/success" element={<SuccessPage />} />
                 <Route
                   path="/profile"
                   element={
