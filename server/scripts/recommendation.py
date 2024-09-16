@@ -18,18 +18,14 @@ client = MongoClient(MONGO_URI)
 db = client['Traditionalattire']
 
 def fetch_user_data(email):
-    """
-    Fetch user data from the database based on the provided email.
-    """
+  
     user = db['users'].find_one({'email': email}, {
         'likedItems': 1, 'viewedItems': 1, 'boughtItems': 1
     })
     return user
 
 def fetch_product_data(item_ids):
-    """
-    Fetch product details for given item IDs from the database.
-    """
+   
     item_ids = [ObjectId(item) for item in item_ids]
     products = list(db['posts'].find({'_id': {'$in': item_ids}}, {
         '_id': 1, 'type': 1, 'category': 1, 'description': 1, 'price': 1, 'images': 1, "gender": 1
@@ -37,9 +33,7 @@ def fetch_product_data(item_ids):
     return products
 
 def fetch_products_by_category(categories):
-    """
-    Fetch products by category from the database.
-    """
+   
     # Ensure categories is a Python list, not a NumPy array
     if isinstance(categories, np.ndarray):
         categories = categories.tolist()
@@ -51,9 +45,7 @@ def fetch_products_by_category(categories):
     return products
 
 def get_recommendations(user_data):
-    """
-    Generate recommendations based on user's liked, viewed, and bought items.
-    """
+  
     liked_items = user_data.get('likedItems', [])
     viewed_items = user_data.get('viewedItems', [])
     bought_items = user_data.get('boughtItems', [])
